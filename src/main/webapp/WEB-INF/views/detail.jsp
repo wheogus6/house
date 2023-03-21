@@ -10,44 +10,26 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel = "icon" href =
-            "space_man.png" rel="shortcut icon" type="image/x-icon">
+
     <title>Hello</title>
     <link rel="stylesheet" href="<c:url value='/css/style.css'/>">
-
-    <script src="https://kit.fontawesome.com/437ac62fbf.js" crossorigin="anonymous"></script>
-    <script src="../p5.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
 </head>
 
 <body>
 <nav class="nav">
-    <div class = "title_logo">
-        <i class="fa-solid fa-user-astronaut"></i>
-        <a href = "<c:url value='/'/>">Hello</a>
-    </div>
+
 
     <ul class="list">
-        <li><a href="<c:url value='/'/>">홈</a></li>
-        <li><a href="<c:url value='/board/list'/>">게시판</a></li>
-        <li><a href="<c:url value='/game'/>">게임</a></li>
+        <li><a href="<c:url value='/calendar/list'/>">가계부</a></li>
         <li><a href="<c:url value='${loginOutLink}'/>">${loginOut}</a></li>
-<%--<c:if test="${loginId eq null}">--%>
         <li><a href="<c:url value='/register/addUser'/>">회원가입</a></li>
-<%--</c:if>--%>
     </ul>
 
-    <div class="icon">
-        <li><a href = "https://github.com/"><i class="fa-brands fa-github"></i></a></li>
-        <li><a href = "https://www.google.co.kr/"><i class="fa-brands fa-google"></i></a></li>
-    </div>
+
 
 </nav>
-<script>
-    let msg = "${msg}";
-    if(msg=="WRT_ERR") alert("게시물 등록에 실패하였습니다. 다시 시도해 주세요.");
-    if(msg=="MOD_ERR") alert("게시물 수정에 실패하였습니다. 다시 시도해 주세요.");
-</script>
+
 <div class="container">
     <link rel="stylesheet" href="<c:url value='/css/boardStyle.css'/>">
     <h2 class="writing-header">게시판 ${mode=="new" ? "글쓰기" : "읽기"}</h2>
@@ -171,65 +153,7 @@
     </li>
 </c:forEach>
 
-<%--<script>--%>
-<%--    function popup(){--%>
-<%--        let url = "/MyPortFolio/comments/modify?num=${boardDto.num}&cno=${comment.cno}";--%>
 
-<%--        let name = "popup test";--%>
-<%--        let option = "witdh = 500, height = 500, top = 100, left = 200";--%>
-
-<%--        window.open(url, name, option);--%>
-<%--    }--%>
-<%--</script>--%>
-
-
-<%--<script>--%>
-<%--    $(document).ready(function(){--%>
-<%--    $("#comment_modify").on("click", function() {--%>
-<%--        let form = $("#commentList");--%>
-<%--        let isReadonly = $("textarea[name=comment]").attr('readonly');--%>
-<%--        // 1. 읽기 상태이면, 수정 상태로 변경--%>
-<%--        if (isReadonly == 'readonly') {--%>
-<%--            $("textarea[name=comment]").attr('readonly', false);--%>
-<%--            $("#comment_modify").html("댓글작성");--%>
-<%--            return;--%>
-<%--        }--%>
-<%--        form.attr("action", <c:url value="/comments/modify${comment}"/>);--%>
-<%--        form.attr("method", "post");--%>
-<%--        if (formCheck())--%>
-<%--            form.submit();--%>
-<%--    });--%>
-
-<%--        &lt;%&ndash;$("#comment_delete").on("click", function(){&ndash;%&gt;--%>
-<%--        &lt;%&ndash;    if(!confirm("정말로 삭제하시겠습니까?")) return;&ndash;%&gt;--%>
-<%--        &lt;%&ndash;    let form = $("#commentList");&ndash;%&gt;--%>
-<%--        &lt;%&ndash;    form.attr("action", "<c:url value='/comment/delete'/>");&ndash;%&gt;--%>
-<%--        &lt;%&ndash;    form.attr("method", "post");&ndash;%&gt;--%>
-<%--        &lt;%&ndash;    form.submit();&ndash;%&gt;--%>
-<%--        &lt;%&ndash;});&ndash;%&gt;--%>
-
-<%--        $("#comment_delete").on("click", function(){--%>
-<%--            let cno = $(this).parent().attr("data-cno");--%>
-<%--            let num = $(this).parent().attr("data-num");--%>
-
-<%--            $.ajax({--%>
-<%--                type: 'delete',--%>
-<%--                url: '/myPortFolio/comments/delete/'+cno+'?num='+num,--%>
-<%--                success : function (result){--%>
-<%--                    alert(result)--%>
-<%--                },--%>
-<%--                error: function (){--%>
-<%--                    alert("error")--%>
-<%--                }--%>
-<%--            });--%>
-
-
-
-<%--        });--%>
-
-
-<%--    });--%>
-<%--</script>--%>
 
 </body>
 

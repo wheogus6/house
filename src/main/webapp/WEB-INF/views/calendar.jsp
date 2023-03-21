@@ -25,18 +25,12 @@
 
 <body>
 <nav class="nav">
-
-
     <ul class="list">
         <li><a href="<c:url value='/calendar/list'/>">가계부</a></li>
         <li><a href="<c:url value='${loginOutLink}'/>">${loginOut}</a></li>
         <li><a href="<c:url value='/register/addUser'/>">회원가입</a></li>
-
     </ul>
-
-
 </nav>
-
 
 <div style="text-align:center">
     <div class="board-container">
