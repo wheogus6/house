@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wheogus.house.dao.MinusMapper">
+
+
+    <select id="selectMinus" parameterType="MinusDto" resultType="MinusDto">
+        select sum(minus)
+        from minus
+        where md = #{md}
+    </select>
+    
+    <select id="select" parameterType="MinusDto" resultType="MinusDto">
+        select minus, content
+        from minus
+        where md = #{md}
+    </select>
+
+    <select id="findById" parameterType="MinusDto" resultType="MinusDto">
+        select minus, content
+        from minus
+        where mid = #{mid}
+    </select>
+
+</mapper>

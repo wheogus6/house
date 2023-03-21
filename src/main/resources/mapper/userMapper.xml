@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wheogus.house.dao.UserMapper">
+
+
+
+    <delete id="delete" parameterType="map">
+        delete from user where id = #{id}
+    </delete>
+
+
+    <select id="select" resultType="UserDto">
+        select * from user where id = #{id}
+    </select>
+
+    <insert id="insert" parameterType="UserDto">
+        insert into user (id, pwd, total)
+        values (#{id}, #{pwd}, #{total});
+    </insert>
+
+    <update id="update" parameterType="UserDto">
+        update user
+        set pwd=#{pwd},
+        where id = #{id}
+    </update>
+
+    <select id="userTotal" resultType="UserDto" parameterType="UserDto">
+        select total
+        from user
+        where id = #{id}
+    </select>
+
+</mapper>
+
+
