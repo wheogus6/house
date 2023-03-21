@@ -2,8 +2,7 @@ package com.wheogus.house.controller;
 
 
 import com.wheogus.house.domain.CalendarDto;
-import com.wheogus.house.domain.UserDto;
-import com.wheogus.house.service.MinusService;
+import com.wheogus.house.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,9 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.List;
 
 @Controller
@@ -22,7 +18,7 @@ import java.util.List;
 public class AccountController {
 
     @Autowired
-    MinusService minusService;
+    AccountService accountService;
 
 
     private boolean loginCheck(HttpServletRequest request) {
@@ -38,18 +34,32 @@ public class AccountController {
         }
         try {
             String id = (String)session.getAttribute("id");
+            Integer total = accountService.selectTotal(id);
+            Integer minus = accountService.selectMinus(id);
+            Integer plus = accountService.selectPlus(id);
 
-            UserDto userDto = minusService.total(id);
+            System.out.println("total = " + total);
+            System.out.println("minus = " + minus);
+            System.out.println("plus = " + plus);
+
+            Integer userDto = total-minus+plus;
 
             model.addAttribute("userDto", userDto);
 
-            List<CalendarDto> calendarDto = minusService.findAll();
+
+            List<CalendarDto> calendarDto = accountService.findAll();
+            System.out.println("calendarDto = " + calendarDto);
             model.addAttribute("calendarDto", calendarDto);
         }
         catch (Exception e){
             e.printStackTrace();
         }
-        return "boardList";
+        return "calendar";
+    }
+
+    @GetMapping("/detail")
+    public String detailDay(){
+        return "detail";
     }
 
 

@@ -15,6 +15,11 @@
         select * from user where id = #{id}
     </select>
 
+<!--    total값 추출-->
+    <select id="total" resultType="Integer">
+        select total from user where id = #{id}
+    </select>
+
     <insert id="insert" parameterType="UserDto">
         insert into user (id, pwd, total)
         values (#{id}, #{pwd}, #{total});
@@ -26,11 +31,7 @@
         where id = #{id}
     </update>
 
-    <select id="userTotal" resultType="UserDto" parameterType="UserDto">
-        select total
-        from user
-        where id = #{id}
-    </select>
+
 
 </mapper>
 

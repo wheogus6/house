@@ -16,7 +16,5 @@ public interface UserDao {
     int updateUser(UserDto userDto);
 
 
-
-
-    UserDto userTotal(String id);
+    Integer selectTotal(String id) throws Exception;
 }

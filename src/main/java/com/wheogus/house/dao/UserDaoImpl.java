@@ -38,7 +38,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public UserDto userTotal(String id){
-        return session.selectOne(namespace + "userTotal", id);
+    public Integer selectTotal(String id) throws Exception{
+        return session.selectOne(namespace + "total", id);
     }
 }

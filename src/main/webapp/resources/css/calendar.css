@@ -58,7 +58,7 @@ input {
     /* 메뉴바의 검색 버튼 아이콘  */
     width: 20%;
     height: 100%;
-    background-color: rgb(106,78,182);
+    background-color: olivedrab;
     color: white;
     display: flex;
     align-items: center;
@@ -71,7 +71,7 @@ input {
 table {
     border-collapse: collapse;
     width: 100%;
-    border-top: 2px solid rgb(106,78,182);
+    border-top: 2px solid olivedrab;
 }
 tr:nth-child(even) {
     background-color: #f0f0f070;
@@ -117,7 +117,7 @@ td.title:hover {
     margin : auto;
 }
 .btn-write {
-    background-color: rgb(106,78,182); /* Blue background */
+    background-color: olivedrab; /* Blue background */
     border: none; /* Remove borders */
     color: white; /* White text */
     padding: 9px 12px; /* Some padding */

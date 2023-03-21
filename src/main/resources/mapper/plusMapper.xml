@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wheogus.house.dao.PlusMapper">
+
+
+    <select id="selectPlus" parameterType="PlusDto" resultType="Integer">
+        select sum(plusM)
+        from plus
+        where pid = #{pid}
+    </select>
+    
+    <select id="select" parameterType="PlusDto" resultType="PlusDto">
+        select plusM, content
+        from plus
+        where pd = #{pd}
+    </select>
+
+    <select id="findById" parameterType="PlusDto" resultType="PlusDto">
+        select plusM
+        from plus
+        where pid = #{pid}
+    </select>
+
+</mapper>

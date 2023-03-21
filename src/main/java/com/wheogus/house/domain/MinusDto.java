@@ -9,9 +9,9 @@ public class MinusDto {
     private Integer minusM;
     private String mid;
     private String content;
-    private Date md;
+    private String md;
 
-    public MinusDto(Integer minusM, String mid, String content, Date md) {
+    public MinusDto(Integer minusM, String mid, String content, String md) {
         this.minusM = minusM;
         this.mid = mid;
         this.content = content;
@@ -42,11 +42,11 @@ public class MinusDto {
         this.content = content;
     }
 
-    public Date getMd() {
+    public String getMd() {
         return md;
     }
 
-    public void setMd(Date md) {
+    public void setMd(String md) {
         this.md = md;
     }
 

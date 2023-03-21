@@ -5,20 +5,20 @@
 <mapper namespace="com.wheogus.house.dao.MinusMapper">
 
 
-    <select id="selectMinus" parameterType="MinusDto" resultType="MinusDto">
-        select sum(minus)
+    <select id="selectMinus" parameterType="MinusDto" resultType="Integer">
+        select sum(minusM)
         from minus
-        where md = #{md}
+        where mid = #{mid}
     </select>
     
     <select id="select" parameterType="MinusDto" resultType="MinusDto">
-        select minus, content
+        select minusM, content
         from minus
         where md = #{md}
     </select>
 
     <select id="findById" parameterType="MinusDto" resultType="MinusDto">
-        select minus, content
+        select minusM
         from minus
         where mid = #{mid}
     </select>

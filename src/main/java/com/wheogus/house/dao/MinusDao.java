@@ -13,5 +13,9 @@ public interface MinusDao {
 
     MinusDto findById(String mid) throws Exception;
 
-    MinusDto MinusTotal(Date md) throws Exception;
+
+
+    MinusDto select(String md) throws Exception;
+
+    Integer selectMinus(String mid) throws Exception;
 }
