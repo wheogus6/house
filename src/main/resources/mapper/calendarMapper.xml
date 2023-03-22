@@ -10,4 +10,10 @@
         from calendar
     </select>
 
+
+    <select id="findDay" parameterType="String" resultType="string">
+        select week
+        from calendar
+        where week = #{week}
+    </select>
 </mapper>

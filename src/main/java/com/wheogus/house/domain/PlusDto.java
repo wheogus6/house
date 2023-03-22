@@ -2,35 +2,38 @@ package com.wheogus.house.domain;
 
 public class PlusDto {
 
-    private Integer plusM;
+    private Integer money;
 
-    private String pid;
+    private String id;
 
     private String content;
 
-    private String pd;
+    private String d;
 
-    public PlusDto(Integer plusM, String pid, String content, String pd) {
-        this.plusM = plusM;
-        this.pid = pid;
+    private Integer pno;
+
+    public PlusDto(Integer money, String id, String content, String d, Integer pno) {
+        this.money = money;
+        this.id = id;
         this.content = content;
-        this.pd = pd;
+        this.d = d;
+        this.pno = pno;
     }
 
-    public Integer getPlusM() {
-        return plusM;
+    public Integer getMoney() {
+        return money;
     }
 
-    public void setPlusM(Integer plusM) {
-        this.plusM = plusM;
+    public void setMoney(Integer money) {
+        this.money = money;
     }
 
-    public String getPid() {
-        return pid;
+    public String getId() {
+        return id;
     }
 
-    public void setPid(String pid) {
-        this.pid = pid;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getContent() {
@@ -41,21 +44,30 @@ public class PlusDto {
         this.content = content;
     }
 
-    public String getPd() {
-        return pd;
+    public String getD() {
+        return d;
     }
 
-    public void setPd(String pd) {
-        this.pd = pd;
+    public void setD(String d) {
+        this.d = d;
+    }
+
+    public Integer getPno() {
+        return pno;
+    }
+
+    public void setPno(Integer pno) {
+        this.pno = pno;
     }
 
     @Override
     public String toString() {
         return "PlusDto{" +
-                "plusM=" + plusM +
-                ", pid='" + pid + '\'' +
+                "money=" + money +
+                ", id='" + id + '\'' +
                 ", content='" + content + '\'' +
-                ", pd='" + pd + '\'' +
+                ", d='" + d + '\'' +
+                ", pno=" + pno +
                 '}';
     }
 }

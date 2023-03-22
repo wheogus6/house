@@ -42,7 +42,7 @@
 <%--        boardList 참고--%>
         <table>
             <c:forEach var="calendar" items="${calendarDto}">
-                <td><a style="color: black" href="<c:url value="/calendar/detail"/>"><c:out value="${calendar.week}"/></a></td>
+                <td><a style="color: black" href="<c:url value="/calendar/detail?week=${calendar.week}"/>"><c:out value="${calendar.week}"/></a></td>
             </c:forEach>
         </table>
 

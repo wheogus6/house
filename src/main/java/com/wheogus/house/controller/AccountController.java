@@ -2,12 +2,14 @@ package com.wheogus.house.controller;
 
 
 import com.wheogus.house.domain.CalendarDto;
+import com.wheogus.house.domain.MinusDto;
+import com.wheogus.house.domain.PlusDto;
 import com.wheogus.house.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -57,96 +59,85 @@ public class AccountController {
         return "calendar";
     }
 
+
     @GetMapping("/detail")
-    public String detailDay(){
+    public String detailDay(String week, Model model){
+       try{
+           String d = accountService.findDay(week);
+           model.addAttribute("d", d);
+
+           // 날짜별 플러스, 마이너스 값들 가져오기
+           List<MinusDto> minusDto = accountService.MinusContent(week);
+           System.out.println("minusDto = " + minusDto);
+           List<PlusDto> plusDto = accountService.PlusContent(week);
+           System.out.println("plusDto = " + plusDto);
+
+           model.addAttribute("minusDto", minusDto);
+           model.addAttribute("plusDto", plusDto);
+
+       }
+       catch (Exception e){e.printStackTrace();
+    }
         return "detail";
     }
 
+    // 지출 등록
+    @PostMapping("/writeMinus")
+    public String writeMinus(HttpSession session, MinusDto minusDto) throws Exception{
+        String id = (String)session.getAttribute("id");
+        minusDto.setId(id);
+        accountService.insertMinus(minusDto);
+
+      return "redirect:/calendar/detail?week=" + minusDto.getD();
+    }
+
+    //입금 등록
+    @PostMapping("/writePlus")
+    public String writePlus(HttpSession session, PlusDto plusDto) throws Exception{
+        String id = (String)session.getAttribute("id");
+        plusDto.setId(id);
+        accountService.insertPlus(plusDto);
+
+        return "redirect:/calendar/detail?week=" + plusDto.getD();
+    }
+
+    //지출내역 삭제
+    @PostMapping("/deleteMinus")
+    public String deleteMinus(Integer mno, HttpSession session) throws Exception{
+        String id = (String)session.getAttribute("id");
+        System.out.println("mno = " + mno);
+        accountService.deleteMinus(mno, id);
+//        return "redirect:/calendar/detail?week=" + week;
+        return "calendar";
+    }
+
+    //입금내역 삭제
+    @PostMapping("/deletePlus")
+    public String deletePlus(Integer pno, HttpSession session)throws Exception {
+        String id = (String)session.getAttribute("id");
+        System.out.println("pno = " + pno);
+        accountService.deletePlus(pno, id);
+        return "calendar";
+    }
+
+    //지출내역 업데이트
+    @PostMapping("/updateMinus")
+    public String updateM(Integer mno, HttpSession session, MinusDto minusDto) throws Exception {
+        String id = (String)session.getAttribute("id");
+        minusDto.setId(id);
+        minusDto.setMno(mno);
+        accountService.updateMinus(minusDto);
+        return "redirect:/calendar/detail?week=" + minusDto.getD();
+    }
 
 
-//    @GetMapping("/read")
-//    public String read(Integer num, Integer page, Integer pageSize, Model model) {
-//        try {
-//            BoardDto boardDto = boardService.read(num);
-//            model.addAttribute(boardDto);
-//            model.addAttribute("page", page);
-//            model.addAttribute("pageSize", pageSize);
-//
-//            //댓글조회
-//            List<CommentDto> comment = null;
-//            comment = commentService.getList(num);
-//            model.addAttribute("comment", comment);
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return "board";
-//    }
-//
-//    @GetMapping("/write")
-//    public String write(Model model) {
-//        model.addAttribute("mode", "new");
-//        return "/board";
-//    }
-//
-//    @PostMapping("/write")
-//    public String write(BoardDto boardDto, HttpSession session, Model model, RedirectAttributes ratter) {
-//        String writer = (String) session.getAttribute("id");  //형변환 주의
-//        boardDto.setWriter(writer);
-//
-//        try {
-//            int rowCnt = boardService.insert(boardDto);
-//            if (rowCnt != 1) {
-//                throw new Exception("write falid");
-//            }
-//            ratter.addFlashAttribute("msg", "WRT_OK");
-//            return "redirect:/board/list";
-//        } catch (Exception e) {
-//           e.printStackTrace();
-//            model.addAttribute(boardDto);
-//            model.addAttribute("msg", "WRT_ERR");
-//            return "board";
-//        }
-//    }
-//
-//    @PostMapping("/remove")
-//    public String remove(Integer num, Integer page, Integer pageSize, Model model, HttpSession session, RedirectAttributes ratter) {
-//        String writer = (String) session.getAttribute("id"); //LoginController 에서 set함.
-//        try {
-//            model.addAttribute("page", page);
-//            model.addAttribute("pageSize", pageSize);
-//            commentService.deleteBoardComment(num);
-//            int rowCnt = boardService.remove(num, writer);
-//
-//            if (rowCnt != 1){
-//                throw new Exception("remove Error");}            //나중에 괄호 수정
-//            ratter.addFlashAttribute("msg", "DEL_OK");
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            ratter.addFlashAttribute("msg", "DEL_ERR");
-//        }
-//        return "redirect:/board/list";
-//    }
-//
-//    @PostMapping("/modify")
-//    public String modify(BoardDto boardDto, HttpSession session, Model model, RedirectAttributes ratter) {
-//        String writer = (String) session.getAttribute("id");
-//        boardDto.setWriter(writer);
-//
-//        try {
-//            int rowCnt = boardService.modify(boardDto);
-//            if (rowCnt != 1) {
-//                throw new Exception("Modify failed");
-//            }
-//            ratter.addFlashAttribute("msg", "MOD_OK");
-//            return "redirect:/board/list";
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            model.addAttribute(boardDto);
-//            model.addAttribute("msg", "MOD_ERR");
-//            return "board";
-//        }
-//    }
-
+    //입금내역 업데이트
+    @PostMapping("/updatePlus")
+    public String updateP(Integer pno, HttpSession session, PlusDto plusDto) throws Exception {
+        String id = (String)session.getAttribute("id");
+        plusDto.setId(id);
+        plusDto.setPno(pno);
+        accountService.updatePlus(plusDto);
+        return "redirect:/calendar/detail?week=" + plusDto.getD();
+    }
 }

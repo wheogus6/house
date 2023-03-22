@@ -6,32 +6,46 @@ import java.util.Objects;
 
 public class MinusDto {
 
-    private Integer minusM;
-    private String mid;
+    private Integer money;
+    private String id;
     private String content;
-    private String md;
+    private String d;
 
-    public MinusDto(Integer minusM, String mid, String content, String md) {
-        this.minusM = minusM;
-        this.mid = mid;
+    private  Integer mno;
+
+    public MinusDto(Integer money, String id, String content, String d, Integer mno) {
+        this.money = money;
+        this.id = id;
         this.content = content;
-        this.md = md;
+        this.d = d;
+        this.mno = mno;
     }
 
-    public Integer getMinusM() {
-        return minusM;
+    @Override
+    public String toString() {
+        return "MinusDto{" +
+                "money=" + money +
+                ", id='" + id + '\'' +
+                ", content='" + content + '\'' +
+                ", d='" + d + '\'' +
+                ", mno=" + mno +
+                '}';
     }
 
-    public void setMinusM(Integer minusM) {
-        this.minusM = minusM;
+    public Integer getMoney() {
+        return money;
     }
 
-    public String getMid() {
-        return mid;
+    public void setMoney(Integer money) {
+        this.money = money;
     }
 
-    public void setMid(String mid) {
-        this.mid = mid;
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getContent() {
@@ -42,34 +56,19 @@ public class MinusDto {
         this.content = content;
     }
 
-    public String getMd() {
-        return md;
+    public String getD() {
+        return d;
     }
 
-    public void setMd(String md) {
-        this.md = md;
+    public void setD(String d) {
+        this.d = d;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        MinusDto minusDto = (MinusDto) o;
-        return Objects.equals(minusM, minusDto.minusM) && Objects.equals(mid, minusDto.mid) && Objects.equals(content, minusDto.content) && Objects.equals(md, minusDto.md);
+    public Integer getMno() {
+        return mno;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(minusM, mid, content, md);
-    }
-
-    @Override
-    public String toString() {
-        return "MinusDto{" +
-                "minusM=" + minusM +
-                ", mid='" + mid + '\'' +
-                ", content='" + content + '\'' +
-                ", md=" + md +
-                '}';
+    public void setMno(Integer mno) {
+        this.mno = mno;
     }
 }

@@ -6,21 +6,44 @@
 
 
     <select id="selectMinus" parameterType="MinusDto" resultType="Integer">
-        select sum(minusM)
+        select sum(money)
         from minus
-        where mid = #{mid}
+        where id = #{id}
+    </select>
+
+    <select id="dayMinus" parameterType="MinusDto" resultType="Integer">
+        select sum(money)
+        from minus
+        where d = #{d}
     </select>
     
-    <select id="select" parameterType="MinusDto" resultType="MinusDto">
-        select minusM, content
+    <select id="minusContent" parameterType="String" resultType="MinusDto">
+        select money, id, content, d, mno
         from minus
-        where md = #{md}
+        where d = #{d}
     </select>
 
     <select id="findById" parameterType="MinusDto" resultType="MinusDto">
-        select minusM
+        select money
         from minus
-        where mid = #{mid}
+        where id = #{id}
     </select>
+
+    <insert id="insertMinus" parameterType="MinusDto">
+        insert into minus
+            (money, id, content, d)
+        values
+            (#{money}, #{id}, #{content}, #{d})
+    </insert>
+
+    <delete id="deleteMinus" parameterType="map">
+        delete from minus where id = #{id} and mno = #{mno}
+    </delete>
+
+    <update id="updateMinus" parameterType="MinusDto">
+        update minus
+        set money = #{money}, content = #{content}
+        where id = #{id} and mno = #{mno}
+    </update>
 
 </mapper>

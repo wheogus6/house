@@ -21,5 +21,9 @@ public class CalendarDaoImpl implements CalendarDao {
         return session.selectList(namespace + "selectAll");
     }
 
+    @Override
+    public String findDay(String week){
+        return session.selectOne(namespace + "findDay", week);
+    }
 
 }

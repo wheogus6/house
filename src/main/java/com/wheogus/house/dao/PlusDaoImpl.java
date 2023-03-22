@@ -6,6 +6,10 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 
 @Repository
 public class PlusDaoImpl implements PlusDao {
@@ -17,18 +21,40 @@ public class PlusDaoImpl implements PlusDao {
 
 
     @Override
-    public PlusDto findById(String pid) throws Exception {
-        return session.selectOne(namespace + "findById", pid);
+    public PlusDto findById(String id) throws Exception {
+        return session.selectOne(namespace + "findById", id);
     }
 
     @Override
-    public PlusDto select(String pd) throws Exception{
-        return session.selectOne(namespace + "select", pd);
+    public PlusDto select(String d) throws Exception{
+        return session.selectOne(namespace + "select", d);
     }
 
     @Override
-    public Integer selectPlus(String pid) throws Exception {
-        return session.selectOne(namespace + "selectPlus", pid);
+    public Integer selectPlus(String id) throws Exception {
+        return session.selectOne(namespace + "selectPlus", id);
+    }
+
+    @Override
+    public List<PlusDto> plusContent(String d) {
+        return session.selectList(namespace + "plusContent", d);
+    }
+
+    @Override
+    public int insertPlus(PlusDto plusDto) {
+        return session.insert(namespace + "insertPlus", plusDto);
+    }
+
+    @Override
+    public int deletePlus(Integer pno, String id) throws Exception{
+        Map map = new HashMap();
+        map.put("pno", pno);
+        map.put("id", id);
+        return session.delete(namespace + "deletePlus", map);
+    }
+    @Override
+    public int updatePlus(PlusDto plusDto) throws Exception{
+        return session.delete(namespace + "updatePlus", plusDto);
     }
 
 

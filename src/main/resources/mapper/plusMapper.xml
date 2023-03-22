@@ -6,21 +6,44 @@
 
 
     <select id="selectPlus" parameterType="PlusDto" resultType="Integer">
-        select sum(plusM)
+        select sum(money)
         from plus
-        where pid = #{pid}
+        where id = #{id}
     </select>
     
     <select id="select" parameterType="PlusDto" resultType="PlusDto">
-        select plusM, content
+        select money, content
         from plus
-        where pd = #{pd}
+        where d = #{d}
     </select>
 
     <select id="findById" parameterType="PlusDto" resultType="PlusDto">
-        select plusM
+        select money
         from plus
-        where pid = #{pid}
+        where id = #{id}
     </select>
+
+    <select id="plusContent" parameterType="String" resultType="PlusDto">
+        select money, id, content, d, pno
+        from plus
+        where d = #{d}
+    </select>
+
+    <insert id="insertPlus" parameterType="PlusDto">
+        insert into plus
+            (money, id, content, d)
+        values
+            (#{money}, #{id}, #{content}, #{d})
+    </insert>
+
+    <delete id="deletePlus" parameterType="map">
+        delete from plus where pno = #{pno} and id = #{id}
+    </delete>
+
+    <update id="updatePlus" parameterType="PlusDto">
+        update plus
+        set money = #{money}, content = #{content}
+        where id = #{id} and mno = #{pno}
+    </update>
 
 </mapper>
