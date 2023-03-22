@@ -10,7 +10,6 @@ public class MinusDto {
     private String id;
     private String content;
     private String d;
-
     private  Integer mno;
 
     public MinusDto(Integer money, String id, String content, String d, Integer mno) {

@@ -53,11 +53,17 @@
 
     <h3 style="color: red">지출내역</h3>
     <c:forEach items="${minusDto}" var="minusDto">
-    <form id="${minusDto.mno}">
-        <input name="num" value="아이디 : ${minusDto.id} / 금액 : ${minusDto.money} / 내용 : ${minusDto.content}">
-        <input type="hidden" name="mno" value="${minusDto.mno}">
-        <button type="button" id="minusDelete" data-formid="">지출내역 삭제</button>
+
+    <form id="minus">
+        <input  name="num" value="아이디 : ${minusDto.id} / 금액 : ${minusDto.money} / 내용 : ${minusDto.content}">
+        <input  type="hidden" name="mno" value="${minusDto.mno}">
+        <button type="button" id="minusDelete" form="${minusDto.mno}">지출내역 삭제</button>
         <button type="button" id="minusUpdate">지출내역 수정</button>
+
+        <c:if test="${mode eq 'new'}">
+            <button type="button" id="minusBtn">등록</button>
+        </c:if>
+
     </form>
     </c:forEach>
 
@@ -68,11 +74,16 @@
 
     <h3 style="color: blue">입금내역</h3>
     <c:forEach items="${plusDto}" var="plusDto">
-    <form id="plus">
-            <input  name="num" value="아이디 : ${plusDto.id} / 금액 : ${plusDto.money} / 내용 : ${plusDto.content}">
-            <input type="hidden" name="pno" value="${plusDto.pno}">
-            <button type="button" id="plusDelete">입금내역 삭제</button>
-            <button type="button" id="plusUpdate">지출내역 수정</button>
+
+    <form id="${plusDto.pno}">
+            <input  name="num" value="아이디 : ${plusDto.id} / 금액 : ${plusDto.money} / 내용 : ${plusDto.content}"> ${mode=="new" ? "" : "readonly='readonly'"}
+            <input  type="hidden" name="pno" value="${plusDto.pno}">
+
+            <button type="button" id="plusDelete" form="${plusDto.pno}">입금내역 삭제</button>
+            <button type="button" id="plusUpdate">입금내역 수정</button>
+        <c:if test="${mode eq 'new'}">
+            <button type="button" id="plusBtn">등록</button>
+        </c:if>
     </form>
     </c:forEach>
 
@@ -110,15 +121,16 @@
 
             //지출내역 삭제 버튼
             $("#minusDelete").on("click", function(){
-            let form = $("#minus");
-            form.attr("action", "<c:url value='/calendar/deleteMinus'/>");
+                <%--$("#minusDelete").parent().attr("action", "<c:url value='/calendar/deleteMinus'/>").attr("method", "post").submit();--%>
+                let form =
+                form.attr("action", "<c:url value='/calendar/deleteMinus'/>");
             form.attr("method", "post");
             form.submit();
             });
 
             //입금내역 삭제 버튼
             $("#plusDelete").on("click", function(){
-                let form = $("#plus");
+                let form =
                     form.attr("action", "<c:url value='/calendar/deletePlus'/>");
                     form.attr("method", "post");
                     form.submit();
@@ -126,12 +138,19 @@
 
         //지출내역 수정 버튼
         $("#minusUpdate").on("click", function(){
-            console.log(this)
             let form = $("#minus");
+            let isReadonly = $("input[name=num]").attr('readonly');
+            // 1. 읽기 상태이면, 수정 상태로 변경
+            if(isReadonly=='readonly') {
+                $("input[name=num]").attr('readonly', false);
+                $("#minusUpdate").html("등록");
+                return;
+            }
             form.attr("action", "<c:url value='/calendar/updateMinus'/>");
             form.attr("method", "post");
             form.submit();
         });
+
         //입금내역 수정 버튼
         $("#plusUpdate").on("click", function(){
             let form = $("#plus");

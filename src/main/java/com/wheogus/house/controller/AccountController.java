@@ -74,7 +74,7 @@ public class AccountController {
 
            model.addAttribute("minusDto", minusDto);
            model.addAttribute("plusDto", plusDto);
-
+           model.addAttribute("mode", "new");
        }
        catch (Exception e){e.printStackTrace();
     }
@@ -140,4 +140,10 @@ public class AccountController {
         accountService.updatePlus(plusDto);
         return "redirect:/calendar/detail?week=" + plusDto.getD();
     }
+
+//    @GetMapping("/update")
+//    public String update(Model model) {
+//        model.addAttribute("mode", "new");
+//        return "detail";
+//    }
 }
