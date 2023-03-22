@@ -56,7 +56,7 @@
     <form id="${minusDto.mno}">
         <input name="num" value="아이디 : ${minusDto.id} / 금액 : ${minusDto.money} / 내용 : ${minusDto.content}">
         <input type="hidden" name="mno" value="${minusDto.mno}">
-        <button type="button" id="minusDelete">지출내역 삭제</button>
+        <button type="button" id="minusDelete" data-formid="">지출내역 삭제</button>
         <button type="button" id="minusUpdate">지출내역 수정</button>
     </form>
     </c:forEach>
