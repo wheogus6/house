@@ -53,11 +53,12 @@
 
     <h3 style="color: red">지출내역</h3>
     <c:forEach items="${minusDto}" var="minusDto">
-    <form id="minus">
+    <form id="${minusDto.mno}">
         <input name="num" value="아이디 : ${minusDto.id} / 금액 : ${minusDto.money} / 내용 : ${minusDto.content}">
         <input type="hidden" name="mno" value="${minusDto.mno}">
         <button type="button" id="minusDelete">지출내역 삭제</button>
         <button type="button" id="minusUpdate">지출내역 수정</button>
+    </form>
     </c:forEach>
 
 
@@ -125,6 +126,7 @@
 
         //지출내역 수정 버튼
         $("#minusUpdate").on("click", function(){
+            console.log(this)
             let form = $("#minus");
             form.attr("action", "<c:url value='/calendar/updateMinus'/>");
             form.attr("method", "post");
