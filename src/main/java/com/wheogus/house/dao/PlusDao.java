@@ -19,4 +19,6 @@ public interface PlusDao {
 
 
     int updatePlus(PlusDto plusDto) throws Exception;
+
+    List<PlusDto> dayPlus()throws Exception;
 }

@@ -27,4 +27,7 @@ public interface MinusDao {
 
 
     int updateMinus(MinusDto minusDto)throws Exception;
+
+
+    List<MinusDto> dayMinus()throws Exception;
 }

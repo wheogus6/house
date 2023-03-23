@@ -5,16 +5,22 @@
 <mapper namespace="com.wheogus.house.dao.MinusMapper">
 
 
-    <select id="selectMinus" parameterType="MinusDto" resultType="Integer">
+    <select id="selectMinusAll" resultType="MinusDto">
+        select *
+        from minus
+    </select>
+
+    <select id="selectMinus" resultType="Integer">
         select sum(money)
         from minus
         where id = #{id}
     </select>
 
-    <select id="dayMinus" parameterType="MinusDto" resultType="Integer">
-        select sum(money)
+    <select id="dayMinus" resultType="String">
+        select sum(money) as money, d
         from minus
-        where d = #{d}
+        group by d
+        order by d asc
     </select>
     
     <select id="minusContent" parameterType="String" resultType="MinusDto">

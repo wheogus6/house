@@ -1,7 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page session="false"%>
+
 <c:set var="loginId" value="${pageContext.request.getSession(false)==null ? '' : pageContext.request.session.getAttribute('id')}"/>
 <c:set var="loginOutLink" value="${loginId=='' ? '/login/in' : '/login/logout'}"/>
 <c:set var="loginOut" value="${loginId=='' ? '로그인' : '로그아웃'}"/>
@@ -45,6 +47,16 @@
                 <td><a style="color: black" href="<c:url value="/calendar/detail?week=${calendar.week}"/>"><c:out value="${calendar.week}"/></a></td>
             </c:forEach>
         </table>
+
+
+
+            <c:forEach var="minusDto" items="${minusDto}">
+                <input style="color: red" value=" 지출 ${minusDto} 원">
+            </c:forEach>
+
+        <c:forEach var="plusDto" items="${plusDto}">
+            <input style="color: blue" value=" 지출 ${plusDto} 원">
+        </c:forEach>
 
 
         </div>

@@ -54,9 +54,13 @@ public class PlusDaoImpl implements PlusDao {
     }
     @Override
     public int updatePlus(PlusDto plusDto) throws Exception{
-        return session.delete(namespace + "updatePlus", plusDto);
+        return session.update(namespace + "updatePlus", plusDto);
     }
 
+    @Override
+    public List<PlusDto> dayPlus()throws Exception {
+        return session.selectList(namespace + "dayPlus");
+    }
 
 
 }

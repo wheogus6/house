@@ -31,6 +31,8 @@ public interface AccountService {
 
     int updatePlus(PlusDto plusDto) throws Exception;
 
+    List<PlusDto> dayPlus() throws Exception;
+
     Integer selectTotal(String id) throws Exception;
 
     int insertMinus(MinusDto minusDto);
@@ -39,6 +41,9 @@ public interface AccountService {
 
 
     int updateMinus(MinusDto minusDto) throws Exception;
+
+
+    List<MinusDto> dayMinus() throws Exception;
 
     Integer selectPlus(String pid) throws Exception;
 

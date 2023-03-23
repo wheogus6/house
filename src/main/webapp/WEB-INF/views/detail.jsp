@@ -29,7 +29,7 @@
 </nav>
 
 <%--날짜 데이터--%>
-<input type="hidden" name="week" value="${md}">
+<input type="hidden" name="week" value="${d}">
 <%--날짜 데이터--%>
 
 
@@ -37,7 +37,8 @@
 <div class="container">
     <link rel="stylesheet" href="<c:url value='/css/detail.css'/>">
     <h2 class="writing-header">상세내역</h2>
-    <br>
+    <br/>
+
 
     <form id="money">
         <input type="hidden" name="d" value="${d}">
@@ -53,41 +54,36 @@
 
     <h3 style="color: red">지출내역</h3>
     <c:forEach items="${minusDto}" var="minusDto">
-
-    <form id="minus">
-        <input  name="num" value="아이디 : ${minusDto.id} / 금액 : ${minusDto.money} / 내용 : ${minusDto.content}">
+    <form id="${minusDto.mno}">
+        <label>금액</label>
+        <input readonly name="money" value="<c:out value= '${minusDto.money}'/>">
+        <label>내용</label>
+        <input readonly name="content" value="<c:out value= '${minusDto.content}'/>">
+        <br>
         <input  type="hidden" name="mno" value="${minusDto.mno}">
-        <button type="button" id="minusDelete" form="${minusDto.mno}">지출내역 삭제</button>
-        <button type="button" id="minusUpdate">지출내역 수정</button>
-
-        <c:if test="${mode eq 'new'}">
-            <button type="button" id="minusBtn">등록</button>
-        </c:if>
-
+        <input  type="hidden" name="d" value="${minusDto.d}">
+        <button type="button" class="deleteMBtn" id="minusDelete">지출내역 삭제</button>
+        <button type="button" class="minusUpdate">지출내역 수정</button>
     </form>
     </c:forEach>
 
-
     <br>
     <br>
-
 
     <h3 style="color: blue">입금내역</h3>
     <c:forEach items="${plusDto}" var="plusDto">
-
-    <form id="${plusDto.pno}">
-            <input  name="num" value="아이디 : ${plusDto.id} / 금액 : ${plusDto.money} / 내용 : ${plusDto.content}"> ${mode=="new" ? "" : "readonly='readonly'"}
+    <form id="plus">
+        <label>금액</label>
+        <input readonly name="money" value="<c:out value= '${plusDto.money}'/>">
+        <label>내용</label>
+        <input readonly name="content" value="<c:out value= '${plusDto.content}'/>">
+        <br>
             <input  type="hidden" name="pno" value="${plusDto.pno}">
-
-            <button type="button" id="plusDelete" form="${plusDto.pno}">입금내역 삭제</button>
-            <button type="button" id="plusUpdate">입금내역 수정</button>
-        <c:if test="${mode eq 'new'}">
-            <button type="button" id="plusBtn">등록</button>
-        </c:if>
+            <input  type="hidden" name="d" value="${plusDto.d}">
+            <button type="button" class="deletePBtn" id="plusDelete" form="${plusDto.pno}">입금내역 삭제</button>
+            <button type="button" class="plusUpdate">입금내역 수정</button>
     </form>
     </c:forEach>
-
-
 
     <br>
     <br>
@@ -97,12 +93,15 @@
 
 
 <script>
-    $(document).ready(function(){
 
     //달력으로 돌아가기 버튼
-        $("#backBtn").on("click", function(){
-            location.href="<c:url value='/calendar/list'/>";
-        });
+    $("#backBtn").on("click", function(){
+        location.href="<c:url value='/calendar/list'/>";
+    });
+
+    $(document).ready(function(){
+
+
 
     //지출 등록 버튼
         $("#minusBtn").on("click", function(){
@@ -119,45 +118,57 @@
             form.submit();
         });
 
-            //지출내역 삭제 버튼
-            $("#minusDelete").on("click", function(){
-                <%--$("#minusDelete").parent().attr("action", "<c:url value='/calendar/deleteMinus'/>").attr("method", "post").submit();--%>
-                let form =
-                form.attr("action", "<c:url value='/calendar/deleteMinus'/>");
-            form.attr("method", "post");
-            form.submit();
-            });
+        //지출내역 삭제 버튼
 
-            //입금내역 삭제 버튼
-            $("#plusDelete").on("click", function(){
-                let form =
-                    form.attr("action", "<c:url value='/calendar/deletePlus'/>");
-                    form.attr("method", "post");
-                    form.submit();
-                });
+        $(".deleteMBtn").on("click", function(){
+            console.log(this.parentNode.id)
+            let formId = this.parentNode.id;
+            let form = $(`#`+formId);
+                form.attr("action", "<c:url value='/calendar/deleteMinus'/>");
+                form.attr("method", "post");
+                form.submit();
+        });
+
+        //입금내역 삭제 버튼
+        $(".deletePBtn").on("click", function(){
+            let formId = this.parentNode.id;
+            let form = $('#'+formId);
+                form.attr("action", "<c:url value='/calendar/deletePlus'/>");
+                form.attr("method", "post");
+                form.submit();
+        });
 
         //지출내역 수정 버튼
-        $("#minusUpdate").on("click", function(){
-            let form = $("#minus");
-            let isReadonly = $("input[name=num]").attr('readonly');
-            // 1. 읽기 상태이면, 수정 상태로 변경
-            if(isReadonly=='readonly') {
-                $("input[name=num]").attr('readonly', false);
-                $("#minusUpdate").html("등록");
-                return;
+        $(".minusUpdate").on("click", function(){
+            let isReadonly = $("input[name=money], input[name=content]").attr('readonly', false);
+            if(isReadonly !='readonly') {
+                $(".minusUpdate").html("등록").on("click", function (){
+                    let formId = this.parentNode.id;
+                    console.log(this.parentNode.id)
+                    let form = $('#'+formId);
+                    form.attr("action", "<c:url value='/calendar/updateMinus'/>");
+                    form.attr("method", "post");
+                    form.submit();
+                })
             }
-            form.attr("action", "<c:url value='/calendar/updateMinus'/>");
-            form.attr("method", "post");
-            form.submit();
         });
 
         //입금내역 수정 버튼
-        $("#plusUpdate").on("click", function(){
-            let form = $("#plus");
-            form.attr("action", "<c:url value='/calendar/updatePlus'/>");
-            form.attr("method", "post");
-            form.submit();
+        $(".plusUpdate").on("click", function(){
+            let isReadonly = $("input[name=money], input[name=content]").attr('readonly', false);
+            if(isReadonly !='readonly') {
+                $(".plusUpdate").html("등록").on("click", function (){
+                    let formId = this.parentNode.id;
+                    console.log(this.parentNode.id)
+                    let form = $('#'+formId);
+                    form.attr("action", "<c:url value='/calendar/updatePlus'/>");
+                    form.attr("method", "post");
+                    form.submit();
+                })
+            }
         });
+
+
 
     });
 </script>

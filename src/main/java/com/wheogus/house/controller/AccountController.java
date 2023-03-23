@@ -35,29 +35,35 @@ public class AccountController {
             return "redirect:/login/in?toURL=" + request.getRequestURL();
         }
         try {
+            // 총액 구하기
             String id = (String)session.getAttribute("id");
             Integer total = accountService.selectTotal(id);
             Integer minus = accountService.selectMinus(id);
             Integer plus = accountService.selectPlus(id);
-
-            System.out.println("total = " + total);
-            System.out.println("minus = " + minus);
-            System.out.println("plus = " + plus);
-
             Integer userDto = total-minus+plus;
-
             model.addAttribute("userDto", userDto);
 
-
+            // 날짜 가져오기
             List<CalendarDto> calendarDto = accountService.findAll();
             System.out.println("calendarDto = " + calendarDto);
             model.addAttribute("calendarDto", calendarDto);
+
+            // 마이너스 플러스 총액 가져오기
+            List<MinusDto> minusDto = accountService.dayMinus();
+            System.out.println("minusDto = " + minusDto);
+            model.addAttribute("minusDto", minusDto);
+
+            List<PlusDto> plusDto = accountService.dayPlus();
+            System.out.println("plsDto = " + plusDto);
+            model.addAttribute("plusDto", plusDto);
         }
         catch (Exception e){
             e.printStackTrace();
         }
         return "calendar";
     }
+
+
 
 
     @GetMapping("/detail")
@@ -74,7 +80,7 @@ public class AccountController {
 
            model.addAttribute("minusDto", minusDto);
            model.addAttribute("plusDto", plusDto);
-           model.addAttribute("mode", "new");
+
        }
        catch (Exception e){e.printStackTrace();
     }
@@ -103,21 +109,22 @@ public class AccountController {
 
     //지출내역 삭제
     @PostMapping("/deleteMinus")
-    public String deleteMinus(Integer mno, HttpSession session) throws Exception{
+    public String deleteMinus(String d, Integer mno, HttpSession session) throws Exception{
         String id = (String)session.getAttribute("id");
         System.out.println("mno = " + mno);
+        String day = accountService.findDay(d);
         accountService.deleteMinus(mno, id);
-//        return "redirect:/calendar/detail?week=" + week;
-        return "calendar";
+        return "redirect:/calendar/detail?week=" + day;
     }
 
     //입금내역 삭제
     @PostMapping("/deletePlus")
-    public String deletePlus(Integer pno, HttpSession session)throws Exception {
+    public String deletePlus(String d, Integer pno, HttpSession session)throws Exception {
         String id = (String)session.getAttribute("id");
         System.out.println("pno = " + pno);
+        String day = accountService.findDay(d);
         accountService.deletePlus(pno, id);
-        return "calendar";
+        return "redirect:/calendar/detail?week=" + day;
     }
 
     //지출내역 업데이트
@@ -141,9 +148,5 @@ public class AccountController {
         return "redirect:/calendar/detail?week=" + plusDto.getD();
     }
 
-//    @GetMapping("/update")
-//    public String update(Model model) {
-//        model.addAttribute("mode", "new");
-//        return "detail";
-//    }
+
 }

@@ -70,6 +70,10 @@ public class AccountServiceImpl implements AccountService {
     public int updateMinus(MinusDto minusDto) throws Exception {
         return minusDao.updateMinus(minusDto);
     }
+    @Override
+    public List<MinusDto> dayMinus() throws Exception{
+        return minusDao.dayMinus();
+    }
 
 
 
@@ -95,10 +99,16 @@ public class AccountServiceImpl implements AccountService {
         return plusDao.updatePlus(plusDto);
     }
 
+    @Override
+    public List<PlusDto> dayPlus() throws Exception{
+        return plusDao.dayPlus();
+    }
 
     // 유저관련
     @Override
     public Integer selectTotal(String id) throws Exception {
         return userDao.selectTotal(id);
     }
+
+
 }

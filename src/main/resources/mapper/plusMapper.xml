@@ -5,6 +5,13 @@
 <mapper namespace="com.wheogus.house.dao.PlusMapper">
 
 
+    <select id="dayPlus" resultType="String">
+        select sum(money) as money, d
+        from plus
+        group by d
+        order by d asc
+    </select>
+
     <select id="selectPlus" parameterType="PlusDto" resultType="Integer">
         select sum(money)
         from plus
@@ -43,7 +50,7 @@
     <update id="updatePlus" parameterType="PlusDto">
         update plus
         set money = #{money}, content = #{content}
-        where id = #{id} and mno = #{pno}
+        where id = #{id} and pno = #{pno}
     </update>
 
 </mapper>

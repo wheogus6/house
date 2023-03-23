@@ -20,6 +20,7 @@ public class MinusDaoImpl implements MinusDao {
     private static String namespace = "com.wheogus.house.dao.MinusMapper.";
 
 
+
     @Override
     public MinusDto findById(String id) throws Exception {
         return session.selectOne(namespace + "findById", id);
@@ -51,7 +52,11 @@ public class MinusDaoImpl implements MinusDao {
 
     @Override
     public int updateMinus(MinusDto minusDto)throws Exception {
-
         return session.update(namespace + "updateMinus", minusDto);
+    }
+
+    @Override
+    public List<MinusDto> dayMinus()throws Exception {
+        return session.selectList(namespace + "dayMinus");
     }
 }
